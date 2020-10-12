@@ -1,4 +1,4 @@
-package controller;
+package defaultOperation;
 
 import javax.swing.JFrame;
 
@@ -9,11 +9,17 @@ public class StandartFrameOperation {
 		this.frame = frame;
 	}
 
-	public void showMain() {
+	public void showFrame() {
 		frame.setVisible(true);
 	}
 
-	public void hideMain() {
+	public void hideFrame() {
 		frame.setVisible(false);
+	}
+	public boolean isVisible() {
+		return frame.isVisible();
+	}
+	public void switchVisible() {
+		frame.setVisible(!isVisible());
 	}
 }

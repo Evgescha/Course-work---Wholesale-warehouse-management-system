@@ -4,9 +4,9 @@ import javax.swing.JFrame;
 
 import defaultOperation.StandartFrameOperation;
 
-public class ClientController extends StandartFrameOperation{
+public class OrderController extends StandartFrameOperation{
 
-	public ClientController(JFrame frame) {
+	public OrderController(JFrame frame) {
 		super(frame);
 	}
 	
