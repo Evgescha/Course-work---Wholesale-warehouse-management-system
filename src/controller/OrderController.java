@@ -89,6 +89,7 @@ public class OrderController extends StandartFrameOperation {
 						JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(getFrame(), "Ошибка: " + e, "Ошибка", JOptionPane.ERROR_MESSAGE);
+				e.printStackTrace();
 			}
 		}
 	}

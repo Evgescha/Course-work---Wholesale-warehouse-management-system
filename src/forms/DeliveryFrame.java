@@ -3,6 +3,8 @@ package forms;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Date;
@@ -73,6 +75,28 @@ public class DeliveryFrame extends JFrame {
 
 		textField_1 = new JTextField();
 		textField_1.setColumns(10);
+		textField_1.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyTyped(KeyEvent keyEvent) {
+				char c = keyEvent.getKeyChar();
+				if (!(Character.isDigit(c)) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE) {
+					keyEvent.consume();
+				}
+			}
+
+			@Override
+			public void keyReleased(KeyEvent keyEvent) {
+			
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+		});
 
 		JButton btnNewButton_2 = new JButton("Обновить");
 		btnNewButton_2.addActionListener(new ActionListener() {
