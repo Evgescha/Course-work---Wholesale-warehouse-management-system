@@ -35,7 +35,7 @@ public class ProviderController extends StandartFrameOperation {
 			ProviderTableModal model = new ProviderTableModal(list);
 			table.setModel(model);
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(getFrame(), "Error: " + e, "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(getFrame(), "Ошибка: " + e, "Ошибка", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -45,10 +45,38 @@ public class ProviderController extends StandartFrameOperation {
 			try {
 				providerDAO.create(provider);
 				((ProviderFrame) getFrame()).refreshView();
+				JOptionPane.showMessageDialog(getFrame(), "Успешно добавлено", "Успех", JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception e) {
-				JOptionPane.showMessageDialog(getFrame(), "Error: " + e, "Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(getFrame(), "Ошибка: " + e, "Ошибка", JOptionPane.ERROR_MESSAGE);
 			}
 		}
+	}
+
+	public void actionUpdateButton(String name, String adres, String phone, String email, Long id) {
+		if (name.length() > 0 && adres.length() > 0 && phone.length() > 0 && email.length() > 0 && id>0) {
+			try {
+				Provider provider = new Provider(name, adres, phone, email);
+				provider.setId(id);
+				providerDAO.update(provider);
+				((ProviderFrame) getFrame()).refreshView();
+				JOptionPane.showMessageDialog(getFrame(), "Успешно обновлено", "Успех", JOptionPane.INFORMATION_MESSAGE);
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(getFrame(), "Ошибка: " + e, "Ошибка", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+	}
+
+	public void actionDeleteButton(long id) {
+		if(id>0)
+			try {
+				providerDAO.Delete(id);
+				((ProviderFrame) getFrame()).refreshView();
+				JOptionPane.showMessageDialog(getFrame(), "Успешно удалено", "Успех", JOptionPane.INFORMATION_MESSAGE);
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(getFrame(), "Ошибка. Возможно элемент используется в другой таблице" , "Ошибка", JOptionPane.ERROR_MESSAGE);
+				System.out.println(e);
+			}
+		
 	}
 
 }

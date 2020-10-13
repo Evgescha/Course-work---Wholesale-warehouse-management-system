@@ -8,12 +8,13 @@ import entity.Provider;
 
 public class ProviderTableModal extends AbstractTableModel {
 
-	private static final int NAME_COL = 0;
-	private static final int ADRES_COL = 1;
-	private static final int PHONE_COL = 2;
-	private static final int EMAIL_COL = 3;
+	private static final int ID_COL = 0;
+	private static final int NAME_COL = 1;
+	private static final int ADRES_COL = 2;
+	private static final int PHONE_COL = 3;
+	private static final int EMAIL_COL = 4;
 
-	private final String[] columnNames = { "Name", "Adres", "Phone", "Email" };
+	private final String[] columnNames = {"Id", "Name", "Adres", "Phone", "Email" };
 	private List<Provider> list;
 
 	public ProviderTableModal(List<Provider> theProviders) {
@@ -41,6 +42,8 @@ public class ProviderTableModal extends AbstractTableModel {
 		Provider temp = list.get(row);
 
 		switch (col) {
+		case ID_COL:
+			return temp.getId();
 		case NAME_COL:
 			return temp.getName();
 		case ADRES_COL:
