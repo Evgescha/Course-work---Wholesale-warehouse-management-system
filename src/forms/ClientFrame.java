@@ -190,16 +190,4 @@ public class ClientFrame extends JFrame {
 		ApplicationController.clientController.actionSearchButton("", table);
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

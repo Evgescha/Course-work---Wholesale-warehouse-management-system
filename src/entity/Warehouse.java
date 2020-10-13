@@ -23,5 +23,9 @@ public class Warehouse extends AbstractEntity{
 	public void setCount(int count) {
 		this.count = count;
 	}
+	@Override
+	public String toString() {
+		return "Warehouse [product=" + product + ", count=" + count + "]";
+	}
 	
 }

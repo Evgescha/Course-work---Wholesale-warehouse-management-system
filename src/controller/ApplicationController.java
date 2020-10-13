@@ -7,6 +7,7 @@ import forms.MainFrame;
 import forms.OrderFrame;
 import forms.ProductFrame;
 import forms.ProviderFrame;
+import forms.WarehouseFrame;
 
 public class ApplicationController {
 	
@@ -17,7 +18,7 @@ public class ApplicationController {
 	public static ProductController productController = new ProductController(new ProductFrame());
 	public static ProviderController providerController = new ProviderController(new ProviderFrame());
 	public static DeliveryController deliveryController = new DeliveryController(new DeliveryFrame());
-//	public static WarehouseController warehouseController = new WarehouseController(new WarehouseFrame());
+	public static WarehouseController warehouseController = new WarehouseController(new WarehouseFrame());
 	
 	public static void main(String[] args) throws Exception {
 		mainController.showFrame();

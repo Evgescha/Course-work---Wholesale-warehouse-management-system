@@ -33,6 +33,6 @@ public class MainController extends StandartFrameOperation {
 		ApplicationController.deliveryController.switchVisible();
 	}
 	public void actionWarehouseButton() {
-//		ApplicationController.warehouseController.switchVisible();
+		ApplicationController.warehouseController.switchVisible();
 	}
 }
