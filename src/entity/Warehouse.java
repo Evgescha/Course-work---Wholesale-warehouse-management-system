@@ -25,7 +25,7 @@ public class Warehouse extends AbstractEntity{
 	}
 	@Override
 	public String toString() {
-		return "Warehouse [product=" + product + ", count=" + count + "]";
+		return product.getName()+":"+count;
 	}
 	
 }

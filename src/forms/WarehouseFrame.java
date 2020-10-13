@@ -27,7 +27,7 @@ public class WarehouseFrame extends JFrame {
 	private JTable table;
 
 	public WarehouseFrame() {
-		setTitle("Клиент");
+		setTitle("Склад");
 		setBounds(100, 100, 592, 428);
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		

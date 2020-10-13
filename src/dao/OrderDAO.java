@@ -13,15 +13,16 @@ import java.util.List;
 import java.util.Properties;
 
 import controller.ApplicationController;
-import entity.Delivery;
+import entity.Client;
+import entity.Employee;
+import entity.Order;
 import entity.Product;
-import entity.Provider;
 import entity.Warehouse;
 
-public class DeliveryDAO {
+public class OrderDAO {
 	private Connection myConn;
 
-	public DeliveryDAO() throws Exception {
+	public OrderDAO() throws Exception {
 		Properties props = new Properties();
 		props.load(new FileInputStream("db.properties"));
 
@@ -29,20 +30,20 @@ public class DeliveryDAO {
 		String password = props.getProperty("password");
 		String dburl = props.getProperty("dburl");
 		myConn = DriverManager.getConnection(dburl, user, password);
-		System.out.println("DB delivery connection success");
+		System.out.println("DB orders connection success");
 	}
 
-	public List<Delivery> readAll() throws Exception {
-		List<Delivery> list = new ArrayList<Delivery>();
+	public List<Order> readAll() throws Exception {
+		List<Order> list = new ArrayList<Order>();
 
 		Statement myStmt = null;
 		ResultSet myRs = null;
 
 		try {
 			myStmt = myConn.createStatement();
-			myRs = myStmt.executeQuery("SELECT * FROM delivery");
+			myRs = myStmt.executeQuery("SELECT * FROM orders");
 			while (myRs.next()) {
-				Delivery tempEntity = convertRowToEntity(myRs);
+				Order tempEntity = convertRowToEntity(myRs);
 				list.add(tempEntity);
 			}
 			return list;
@@ -51,8 +52,8 @@ public class DeliveryDAO {
 		}
 	}
 
-	public List<Delivery> search(String productName) throws Exception {
-		List<Delivery> list = new ArrayList<Delivery>();
+	public List<Order> search(String productName) throws Exception {
+		List<Order> list = new ArrayList<Order>();
 
 		PreparedStatement myStmt = null;
 		ResultSet myRs = null;
@@ -60,11 +61,11 @@ public class DeliveryDAO {
 		try {
 			productName = "%" + productName + "%";
 			myStmt = myConn.prepareStatement(
-					"SELECT * FROM delivery WHERE id_product in (SELECT id FROM product where name LIKE ?)");
+					"SELECT * FROM orders WHERE id_product in (SELECT id FROM product where name LIKE ?)");
 			myStmt.setString(1, productName);
 			myRs = myStmt.executeQuery();
 			while (myRs.next()) {
-				Delivery tempEntity = convertRowToEntity(myRs);
+				Order tempEntity = convertRowToEntity(myRs);
 				list.add(tempEntity);
 			}
 
@@ -74,43 +75,42 @@ public class DeliveryDAO {
 		}
 	}
 
-	public void create(Delivery entity) throws Exception {
+	public void create(Order entity) throws Exception {
 		PreparedStatement myStmt = null;
 		try {
-			myStmt = myConn.prepareStatement(
-					"insert into delivery" + " (id_product, id_provider, dates, count)" + " values (?, ?, ?, ?)");
-			myStmt.setLong(1, entity.getProduct().getId());
-			myStmt.setLong(2, entity.getProvider().getId());
-			myStmt.setDate(3, entity.getDate());
-			myStmt.setInt(4, entity.getCount());
+			myStmt = myConn.prepareStatement("insert into orders"
+					+ " (id_employee, id_client, id_product, dates, count)" + " values (?, ?, ?, ?,?)");
+			myStmt.setLong(1, entity.getEmployee().getId());
+			myStmt.setLong(2, entity.getClient().getId());
+			myStmt.setLong(3, entity.getProduct().getId());
+			myStmt.setDate(4, entity.getDate());
+			myStmt.setInt(5, entity.getCount());
 			myStmt.executeUpdate();
 
 			// past
-			List<Warehouse> readAllByIdProduct = ApplicationController.warehouseController.getDAO()
-					.readAllByIdProduct(entity.getProduct().getId());
-			if (readAllByIdProduct.size() > 0) {
-				Warehouse warehouse = readAllByIdProduct.get(0);
-				warehouse.setCount(warehouse.getCount() + entity.getCount());
-				ApplicationController.warehouseController.getDAO().update(warehouse);
+			Warehouse warehouse = ApplicationController.warehouseController.getDAO()
+					.readAllByIdProduct(entity.getProduct().getId()).get(0);
+			if (warehouse.getCount() - entity.getCount() <= 0) {
+				ApplicationController.warehouseController.getDAO().Delete(warehouse.getId());
 			} else {
-				ApplicationController.warehouseController.getDAO()
-						.create(new Warehouse(entity.getProduct(), entity.getCount()));
+				warehouse.setCount(warehouse.getCount() - entity.getCount());
+				ApplicationController.warehouseController.getDAO().update(warehouse);
 			}
 		} finally {
 			close(myStmt);
 		}
 	}
 
-	public List<Delivery> read(Long id) throws Exception {
-		List<Delivery> list = new ArrayList<Delivery>();
+	public List<Order> read(Long id) throws Exception {
+		List<Order> list = new ArrayList<Order>();
 		PreparedStatement myStmt = null;
 		ResultSet myRs = null;
 		try {
-			myStmt = myConn.prepareStatement("SELECT * FROM delivery WHERE id=?");
+			myStmt = myConn.prepareStatement("SELECT * FROM orders WHERE id=?");
 			myStmt.setLong(1, id);
 			myRs = myStmt.executeQuery();
 			while (myRs.next()) {
-				Delivery tempEntity = convertRowToEntity(myRs);
+				Order tempEntity = convertRowToEntity(myRs);
 				list.add(tempEntity);
 			}
 			return list;
@@ -119,37 +119,33 @@ public class DeliveryDAO {
 		}
 	}
 
-	public void update(Delivery entity) throws Exception {
+	public void update(Order entity) throws Exception {
 		PreparedStatement myStmt = null;
 		try {
-			Delivery past = read(entity.getId()).get(0);
+			Order past = read(entity.getId()).get(0);
 			Warehouse warehouse = ApplicationController.warehouseController.getDAO()
 					.readAllByIdProduct(past.getProduct().getId()).get(0);
 
 			int countDifference = past.getCount() - entity.getCount();
-			myStmt = myConn
-					.prepareStatement("UPDATE delivery SET id_product=?, id_provider=?, dates=?, count=? WHERE id=?");
-			myStmt.setLong(1, entity.getProduct().getId());
-			myStmt.setLong(2, entity.getProvider().getId());
-			myStmt.setDate(3, entity.getDate());
-			myStmt.setInt(4, entity.getCount());
-			myStmt.setLong(5, entity.getId());
+			myStmt = myConn.prepareStatement(
+					"UPDATE orders SET id_employee=?, id_client=?, id_product=?, dates=?, count=? WHERE id=?");
+			myStmt.setLong(1, entity.getEmployee().getId());
+			myStmt.setLong(2, entity.getClient().getId());
+			myStmt.setLong(3, entity.getProduct().getId());
+			myStmt.setDate(4, entity.getDate());
+			myStmt.setInt(5, entity.getCount());
+			myStmt.setLong(6, entity.getId());
 			myStmt.executeUpdate();
-			
 			// past
-			warehouse.setCount(warehouse.getCount() - past.getCount());
+			warehouse.setCount(warehouse.getCount() + past.getCount());
 			ApplicationController.warehouseController.getDAO().update(warehouse);
-			
 			// new
 			List<Warehouse> readAllByIdProduct = ApplicationController.warehouseController.getDAO()
 					.readAllByIdProduct(entity.getProduct().getId());
 			if (readAllByIdProduct.size() > 0) {
 				Warehouse warehouse2 = readAllByIdProduct.get(0);
-				warehouse2.setCount(warehouse2.getCount() + entity.getCount());
+				warehouse2.setCount(warehouse2.getCount() - entity.getCount());
 				ApplicationController.warehouseController.getDAO().update(warehouse2);
-			} else {
-				ApplicationController.warehouseController.getDAO()
-						.create(new Warehouse(entity.getProduct(), entity.getCount()));
 			}
 
 		} finally {
@@ -160,38 +156,41 @@ public class DeliveryDAO {
 	public void Delete(Long id) throws Exception {
 		PreparedStatement myStmt = null;
 		try {
-			Delivery delivery = read(id).get(0);
+			Order delivery = read(id).get(0);
 
-			myStmt = myConn.prepareStatement("DELETE FROM delivery WHERE id=?");
-			Warehouse warehouse = ApplicationController.warehouseController.getDAO()
-					.readAllByIdProduct(delivery.getProduct().getId()).get(0);
+			myStmt = myConn.prepareStatement("DELETE FROM orders WHERE id=?");
 
 			myStmt.setLong(1, id);
 			myStmt.executeUpdate();
-			if (warehouse.getCount() - delivery.getCount() == 0)
-				ApplicationController.warehouseController.getDAO().Delete(warehouse.getId());
-			else {
-				warehouse.setCount(warehouse.getCount() - delivery.getCount());
-				ApplicationController.warehouseController.getDAO().update(warehouse);
-			}
+
+			Warehouse warehouse = ApplicationController.warehouseController.getDAO()
+					.readAllByIdProduct(delivery.getProduct().getId()).get(0);
+			warehouse.setCount(warehouse.getCount() + delivery.getCount());
+			ApplicationController.warehouseController.getDAO().update(warehouse);
 
 		} finally {
 			close(myStmt);
 		}
 	}
 
-	private Delivery convertRowToEntity(ResultSet myRs) throws SQLException {
-		Product product;
-		Delivery temp = null;
+	private Order convertRowToEntity(ResultSet myRs) throws SQLException {
+		Product product=null;
+		Employee employee=null;
+		Client client = null;
+		Order temp = null;
 		try {
 			Long id = myRs.getLong("id");
+			Long id_employee= myRs.getLong("id_employee");
+			Long id_client= myRs.getLong("id_client");
 			Long id_product = myRs.getLong("id_product");
-			Long id_provider = myRs.getLong("id_provider");
 			Date dates = myRs.getDate("dates");
 			int count = myRs.getInt("count");
+			
+			employee= ApplicationController.employeeController.getDAO().read(id_employee).get(0);
+			client= ApplicationController.clientController.getDAO().read(id_client).get(0);
 			product = ApplicationController.productController.getDAO().read(id_product).get(0);
-			Provider provider = ApplicationController.providerController.getDAO().read(id_provider).get(0);
-			temp = new Delivery(provider, product, dates, count);
+			
+			temp = new Order(employee, client, product, dates, count);
 			temp.setId(id);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

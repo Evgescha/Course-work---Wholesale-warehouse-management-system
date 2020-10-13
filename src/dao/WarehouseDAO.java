@@ -76,7 +76,7 @@ public class WarehouseDAO {
 		ResultSet myRs = null;
 
 		try {
-			myStmt = myConn.prepareStatement("SELECT * FROM warehouse WHERE id_product i= ?");
+			myStmt = myConn.prepareStatement("SELECT * FROM warehouse WHERE id_product = ?");
 			myStmt.setLong(1, id_product);
 			myRs = myStmt.executeQuery();
 			while (myRs.next()) {
@@ -147,7 +147,7 @@ public class WarehouseDAO {
 	public void update(Warehouse entity) throws Exception {
 		PreparedStatement myStmt = null;
 		try {
-			myStmt = myConn.prepareStatement("UPDATE warehouse SET id_product=?, count=? WHERE id=");
+			myStmt = myConn.prepareStatement("UPDATE warehouse SET id_product=?, count=? WHERE id=?");
 			myStmt.setLong(1, entity.getProduct().getId());
 			myStmt.setInt(2, entity.getCount());
 			myStmt.setLong(3, entity.getId());

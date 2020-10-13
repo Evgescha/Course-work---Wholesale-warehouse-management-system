@@ -7,19 +7,19 @@ public class Order extends AbstractEntity{
 	private Client client;
 	private Product product;
 	private Date date;
-	private int summ;
+	private int count;
 
 	public Order() {
 		super();
 	}
 
-	public Order(Employee employee, Client client, Product product, Date date, int summ) {
+	public Order(Employee employee, Client client, Product product, Date date, int count) {
 		super();
 		this.employee = employee;
 		this.client = client;
 		this.product = product;
 		this.date = date;
-		this.summ = summ;
+		this.count = count;
 	}
 
 	public Employee getEmployee() {
@@ -54,12 +54,12 @@ public class Order extends AbstractEntity{
 		this.date = date;
 	}
 
-	public int getSumm() {
-		return summ;
+	public int getCount() {
+		return count;
 	}
 
-	public void setSumm(int summ) {
-		this.summ = summ;
+	public void setCount(int count) {
+		this.count = count;
 	}
 
 }
