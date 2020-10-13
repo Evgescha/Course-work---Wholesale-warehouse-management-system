@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
+import dao.ClientDAO;
 import dao.EmployeeDAO;
 import defaultOperation.StandartFrameOperation;
 import entity.Employee;
@@ -86,4 +87,5 @@ public class EmployeeController extends StandartFrameOperation {
 	public void refrechView() {
 		((EmployeeFrame) getFrame()).refreshView();
 	}
+	public EmployeeDAO getDAO() {return DAO;}
 }

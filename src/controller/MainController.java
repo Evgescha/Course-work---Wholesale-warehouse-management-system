@@ -29,4 +29,10 @@ public class MainController extends StandartFrameOperation {
 	public void actionEmployeeButton() {
 		ApplicationController.employeeController.switchVisible();
 	}
+	public void actionDeliveryButton() {
+		ApplicationController.deliveryController.switchVisible();
+	}
+	public void actionWarehouseButton() {
+//		ApplicationController.warehouseController.switchVisible();
+	}
 }

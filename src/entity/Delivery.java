@@ -41,5 +41,9 @@ public class Delivery extends AbstractEntity{
 	public void setCount(int count) {
 		this.count = count;
 	}
+	@Override
+	public String toString() {
+		return "Delivery [provider=" + provider + ", product=" + product + ", date=" + date + ", count=" + count + "]";
+	}
 	
 }

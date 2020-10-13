@@ -14,7 +14,7 @@ import tableModal.ProductTableModal;
 
 public class ProductController extends StandartFrameOperation{
 
-	ProductDAO DAO;
+	public ProductDAO DAO;
 	
 	public ProductController(JFrame frame) {
 		super(frame);
@@ -81,5 +81,9 @@ public class ProductController extends StandartFrameOperation{
 
 	public void refrechView() {
 		((ProductFrame) getFrame()).refreshView();
+	}
+
+	public ProductDAO getDAO() {
+		return DAO;
 	}
 }

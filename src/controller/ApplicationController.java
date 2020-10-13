@@ -1,6 +1,7 @@
 package controller;
 
 import forms.ClientFrame;
+import forms.DeliveryFrame;
 import forms.EmployeeFrame;
 import forms.MainFrame;
 import forms.OrderFrame;
@@ -15,6 +16,8 @@ public class ApplicationController {
 	public static EmployeeController employeeController = new EmployeeController(new EmployeeFrame());
 	public static ProductController productController = new ProductController(new ProductFrame());
 	public static ProviderController providerController = new ProviderController(new ProviderFrame());
+	public static DeliveryController deliveryController = new DeliveryController(new DeliveryFrame());
+//	public static WarehouseController warehouseController = new WarehouseController(new WarehouseFrame());
 	
 	public static void main(String[] args) throws Exception {
 		mainController.showFrame();

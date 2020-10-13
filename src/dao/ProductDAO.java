@@ -89,7 +89,7 @@ public class ProductDAO {
 		ResultSet myRs = null;
 		try {
 			myStmt = myConn
-					.prepareStatement("SELECT * FROM productWHERE id=?");
+					.prepareStatement("SELECT * FROM product WHERE id=?");
 			myStmt.setLong(1, id);
 			myRs=myStmt.executeQuery();
 			while (myRs.next()) {

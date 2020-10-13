@@ -43,7 +43,7 @@ public class Provider extends AbstractEntity{
 	}
 	@Override
 	public String toString() {
-		return "Provider [id="+id+", name=" + name + ", adres=" + adres + ", phone=" + phone + ", email=" + email + "]";
+		return id+": "+ name;
 	}
 	
 	

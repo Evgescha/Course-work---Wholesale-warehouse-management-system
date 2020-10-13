@@ -1,47 +1,59 @@
 package controller;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
-import dao.ClientDAO;
+import dao.DeliveryDAO;
 import defaultOperation.StandartFrameOperation;
-import entity.Client;
-import forms.ClientFrame;
-import tableModal.ClientTableModal;
+import entity.Delivery;
+import entity.Product;
+import entity.Provider;
+import forms.DeliveryFrame;
+import tableModal.DeliveryTableModal;
 
-public class ClientController extends StandartFrameOperation{
+public class DeliveryController extends StandartFrameOperation{
 
-	ClientDAO DAO;
+	DeliveryDAO DAO;
 	
-	public ClientController(JFrame frame) {
+	public DeliveryController(JFrame frame) {
 		super(frame);
 		try {
-			DAO = new ClientDAO();
+			DAO = new DeliveryDAO();
 		} catch (Exception e) {e.printStackTrace();}
 	}
 
-	public void actionSearchButton(String fio, JTable table) {
+	public void actionSearchButton(String productName, JTable table) {
 		try {
-			List<Client> list = null;
+			List<Delivery > list = null;
 
-			if (fio!= null && fio.trim().length() > 0)
-				list = DAO.search(fio);
+			if (productName!= null && productName.trim().length() > 0)
+				list = DAO.search(productName);
 			else
 				list = DAO.readAll();
 
-			ClientTableModal model = new ClientTableModal(list);
+			DeliveryTableModal model = new DeliveryTableModal(list);
 			table.setModel(model);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(getFrame(), "Ошибка: " + e, "Ошибка", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
-	public void actionCreateButton(String fio, String phone, String email) {
-		if (fio.length() > 0 && phone.length() > 0 && email.length() > 0) {
-			Client entity = new Client(fio, phone, email);
+	public void actionCreateButton(Long id_product,Long id_provider,Date date, int count) {
+		if (id_product > 0 && id_provider > 0 && count > 0) {
+			Product product = null;
+			Provider provider = null;
+			try {
+				product = ApplicationController.productController.getDAO().read(id_product).get(0);
+				provider = ApplicationController.providerController.getDAO().read(id_provider).get(0);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			Delivery entity = new Delivery(provider, product, date, count);
 			try {
 				DAO.create(entity);
 				refrechView();
@@ -52,10 +64,12 @@ public class ClientController extends StandartFrameOperation{
 		}
 	}
 
-	public void actionUpdateButton(String fio, String phone, String email, Long id) {
-		if (fio.length() > 0 && phone.length() > 0 && email.length() > 0 && id>0) {
+	public void actionUpdateButton(Long id_product,Long id_provider,Date date, int count, Long id) {
+		if (id_product > 0 && id_provider > 0 && count > 0 && id>0) {
 			try {
-				Client entity= new Client(fio, phone, email);
+				Product product = ApplicationController.productController.getDAO().read(id_product).get(0);
+				Provider provider = ApplicationController.providerController.getDAO().read(id_provider).get(0);
+				Delivery entity= new Delivery(provider, product, date, count);
 				entity.setId(id);
 				DAO.update(entity);
 				refrechView();
@@ -80,7 +94,7 @@ public class ClientController extends StandartFrameOperation{
 	}
 
 	public void refrechView() {
-		((ClientFrame) getFrame()).refreshView();
+		((DeliveryFrame) getFrame()).refreshView();
 	}
-	public ClientDAO getDAO() {return DAO;}
+	public DeliveryDAO getDAO() {return DAO;}
 }

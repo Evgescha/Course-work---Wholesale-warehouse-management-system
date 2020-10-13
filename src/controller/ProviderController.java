@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
+import dao.ProductDAO;
 import dao.ProviderDAO;
 import defaultOperation.StandartFrameOperation;
 import entity.Provider;
@@ -77,6 +78,10 @@ public class ProviderController extends StandartFrameOperation {
 				System.out.println(e);
 			}
 		
+	}
+
+	public ProviderDAO getDAO() {
+		return DAO;
 	}
 
 }

@@ -73,17 +73,33 @@ public class MainFrame extends JFrame{
 		getContentPane().add(btnNewButton_4);
 		
 		JButton btnNewButton_5 = new JButton("Поставка");
+		btnNewButton_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				actionDeliveryButton();
+			}
+		});
 		btnNewButton_5.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		btnNewButton_5.setBounds(10, 47, 195, 25);
 		getContentPane().add(btnNewButton_5);
 		
 		JButton btnNewButton_6 = new JButton("Склад");
+		btnNewButton_6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				actionWarehouseButton();
+			}
+		});
 		btnNewButton_6.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		btnNewButton_6.setBounds(10, 217, 195, 25);
 		getContentPane().add(btnNewButton_6);
 	}
 
-	
+	private void actionWarehouseButton() {
+		ApplicationController.mainController.actionWarehouseButton();
+	}
+	private void actionDeliveryButton() {
+		ApplicationController.mainController.actionDeliveryButton();
+	}
+
 	// Buttons actions
 	private void actionOrderButton() {
 		ApplicationController.mainController.actionOrderButton();
