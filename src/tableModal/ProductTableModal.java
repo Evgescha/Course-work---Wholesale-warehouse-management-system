@@ -4,19 +4,19 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import entity.Client;
+import entity.Product;
 
-public class ClientTableModal extends AbstractTableModel {
+
+public class ProductTableModal extends AbstractTableModel {
 
 	private static final int ID_COL = 0;
-	private static final int FIO_COL = 1;
-	private static final int PHONE_COL = 2;
-	private static final int EMAIL_COL = 3;
+	private static final int NAME_COL = 1;
+	private static final int PRICE_COL = 2;
 
-	private final String[] columnNames = {"Id", "FIO", "Phone", "Email" };
-	private List<Client> list;
+	private final String[] columnNames = {"Id", "Name", "Price"};
+	private List<Product > list;
 
-	public ClientTableModal(List<Client> theProviders) {
+	public ProductTableModal(List<Product > theProviders) {
 		list = theProviders;
 	}
 
@@ -38,19 +38,17 @@ public class ClientTableModal extends AbstractTableModel {
 	@Override
 	public Object getValueAt(int row, int col) {
 
-		Client temp = list.get(row);
+		Product temp = list.get(row);
 
 		switch (col) {
 		case ID_COL:
 			return temp.getId();
-		case FIO_COL:
-			return temp.getFio();
-		case PHONE_COL:
-			return temp.getPhone();
-		case EMAIL_COL:
-			return temp.getEmail();
+		case NAME_COL:
+			return temp.getName();
+		case PRICE_COL:
+			return temp.getPrice();
 		default:
-			return temp.getFio();
+			return temp.getName();
 		}
 	}
 

@@ -11,13 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import entity.Employee;
+import entity.Product;
 
 
-public class EmployeeDAO {
+public class ProductDAO {
 	private Connection myConn;
 
-	public EmployeeDAO() throws Exception {
+	public ProductDAO() throws Exception {
 		Properties props = new Properties();
 		props.load(new FileInputStream("db.properties"));
 
@@ -25,20 +25,20 @@ public class EmployeeDAO {
 		String password = props.getProperty("password");
 		String dburl = props.getProperty("dburl");
 		myConn = DriverManager.getConnection(dburl, user, password);
-		System.out.println("DB employee connection success");
+		System.out.println("DB product connection success");
 	}
 
-	public List<Employee> readAll() throws Exception {
-		List<Employee> list = new ArrayList<Employee>();
+	public List<Product > readAll() throws Exception {
+		List<Product > list = new ArrayList<Product >();
 
 		Statement myStmt = null;
 		ResultSet myRs = null;
 
 		try {
 			myStmt = myConn.createStatement();
-			myRs = myStmt.executeQuery("SELECT * FROM employee");
+			myRs = myStmt.executeQuery("SELECT * FROM product");
 			while (myRs.next()) {
-				Employee tempEntity = convertRowToEntity(myRs);
+				Product tempEntity = convertRowToEntity(myRs);
 				list.add(tempEntity);
 			}
 
@@ -48,19 +48,19 @@ public class EmployeeDAO {
 		}
 	}
 
-	public List<Employee> search(String fio) throws Exception {
-		List<Employee> list = new ArrayList<Employee>();
+	public List<Product > search(String name) throws Exception {
+		List<Product > list = new ArrayList<Product >();
 
 		PreparedStatement myStmt = null;
 		ResultSet myRs = null;
 
 		try {
-			fio= "%" + fio+ "%";
-			myStmt = myConn.prepareStatement("SELECT * FROM employee WHERE fio LIKE ?");
-			myStmt.setString(1, fio);
+			name= "%" + name+ "%";
+			myStmt = myConn.prepareStatement("SELECT * FROM product WHERE name LIKE ?");
+			myStmt.setString(1, name);
 			myRs = myStmt.executeQuery();
 			while (myRs.next()) {
-				Employee tempEntity = convertRowToEntity(myRs);
+				Product tempEntity = convertRowToEntity(myRs);
 				list.add(tempEntity);
 			}
 
@@ -70,31 +70,30 @@ public class EmployeeDAO {
 		}
 	}
 
-	public void create(Employee entity) throws Exception {
+	public void create(Product entity) throws Exception {
 		PreparedStatement myStmt = null;
 		try {
 			myStmt = myConn
-					.prepareStatement("insert into employee" + " (fio,phone,email)" + " values ( ?, ?, ?)");
-			myStmt.setString(1, entity.getFio());
-			myStmt.setString(2, entity.getPhone());
-			myStmt.setString(3, entity.getEmail());
+					.prepareStatement("insert into product" + " (name, price)" + " values (?, ?)");
+			myStmt.setString(1, entity.getName());
+			myStmt.setInt(2, entity.getPrice());
 			myStmt.executeUpdate();
 		} finally {
 			close(myStmt);
 		}
 	}
 
-	public List<Employee> read(Long id) throws Exception {
-		List<Employee> list = new ArrayList<Employee>();
+	public List<Product > read(Long id) throws Exception {
+		List<Product > list = new ArrayList<Product >();
 		PreparedStatement myStmt = null;
 		ResultSet myRs = null;
 		try {
 			myStmt = myConn
-					.prepareStatement("SELECT * FROM employee WHERE id=?");
+					.prepareStatement("SELECT * FROM productWHERE id=?");
 			myStmt.setLong(1, id);
 			myRs=myStmt.executeQuery();
 			while (myRs.next()) {
-				Employee tempEntity = convertRowToEntity(myRs);
+				Product tempEntity = convertRowToEntity(myRs);
 				list.add(tempEntity);
 			}
 			return list;
@@ -103,14 +102,13 @@ public class EmployeeDAO {
 		}
 	}
 
-	public void update(Employee entity) throws Exception {
+	public void update(Product entity) throws Exception {
 		PreparedStatement myStmt = null;
 		try {
-			myStmt = myConn.prepareStatement("UPDATE employee SET fio=?, phone=?, email=? WHERE id=?");
-			myStmt.setString(1, entity.getFio());
-			myStmt.setString(2, entity.getPhone());
-			myStmt.setString(3, entity.getEmail());
-			myStmt.setLong(4, entity.getId());
+			myStmt = myConn.prepareStatement("UPDATE product SET name=?, price=? WHERE id=?");
+			myStmt.setString(1, entity.getName());
+			myStmt.setInt(2, entity.getPrice());
+			myStmt.setLong(3, entity.getId());
 			myStmt.executeUpdate();
 		} finally {
 			close(myStmt);
@@ -120,7 +118,7 @@ public class EmployeeDAO {
 	public void Delete(Long id) throws Exception {
 		PreparedStatement myStmt = null;
 		try {
-			myStmt = myConn.prepareStatement("DELETE FROM employee WHERE id=?");
+			myStmt = myConn.prepareStatement("DELETE FROM product WHERE id=?");
 			myStmt.setLong(1, id);
 			myStmt.executeUpdate();
 		} finally {
@@ -128,12 +126,11 @@ public class EmployeeDAO {
 		}
 	}
 
-	private Employee convertRowToEntity(ResultSet myRs) throws SQLException {
+	private Product  convertRowToEntity(ResultSet myRs) throws SQLException {
 		Long id = myRs.getLong("id");
-		String fio = myRs.getString("fio");
-		String phone = myRs.getString("phone");
-		String email = myRs.getString("email");
-		Employee temp = new Employee (fio, phone, email);
+		String name= myRs.getString("name");
+		int price = myRs.getInt("price");		
+		Product temp = new Product (name, price);
 		temp.setId(id);
 		return temp;
 	}

@@ -18,7 +18,7 @@ public class MainFrame extends JFrame{
 	private void initialize() {
 		
 		setTitle("Главная");
-		setBounds(100, 100, 233, 219);
+		setBounds(100, 100, 233, 292);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
 
@@ -39,7 +39,7 @@ public class MainFrame extends JFrame{
 			}
 		});
 		btnNewButton_1.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-		btnNewButton_1.setBounds(10, 45, 195, 25);
+		btnNewButton_1.setBounds(10, 115, 195, 25);
 		getContentPane().add(btnNewButton_1);
 
 		JButton btnNewButton_2 = new JButton("Поставщики");
@@ -59,7 +59,7 @@ public class MainFrame extends JFrame{
 			}
 		});
 		btnNewButton_3.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-		btnNewButton_3.setBounds(10, 113, 195, 25);
+		btnNewButton_3.setBounds(10, 181, 195, 25);
 		getContentPane().add(btnNewButton_3);
 
 		JButton btnNewButton_4 = new JButton("Сотрудники");
@@ -71,6 +71,16 @@ public class MainFrame extends JFrame{
 		btnNewButton_4.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		btnNewButton_4.setBounds(10, 147, 195, 25);
 		getContentPane().add(btnNewButton_4);
+		
+		JButton btnNewButton_5 = new JButton("Поставка");
+		btnNewButton_5.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		btnNewButton_5.setBounds(10, 47, 195, 25);
+		getContentPane().add(btnNewButton_5);
+		
+		JButton btnNewButton_6 = new JButton("Склад");
+		btnNewButton_6.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		btnNewButton_6.setBounds(10, 217, 195, 25);
+		getContentPane().add(btnNewButton_6);
 	}
 
 	
