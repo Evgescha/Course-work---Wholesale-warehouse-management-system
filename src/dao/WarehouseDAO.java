@@ -69,6 +69,26 @@ public class WarehouseDAO {
 			close(myStmt, myRs);
 		}
 	}
+	public List<Warehouse> readAllByIdProduct(Long id_product) throws Exception {
+		List<Warehouse> list = new ArrayList<Warehouse>();
+
+		PreparedStatement myStmt = null;
+		ResultSet myRs = null;
+
+		try {
+			myStmt = myConn.prepareStatement("SELECT * FROM warehouse WHERE id_product i= ?");
+			myStmt.setLong(1, id_product);
+			myRs = myStmt.executeQuery();
+			while (myRs.next()) {
+				Warehouse tempEntity = convertRowToEntity(myRs);
+				list.add(tempEntity);
+			}
+
+			return list;
+		} finally {
+			close(myStmt, myRs);
+		}
+	}
 
 	public List<Warehouse> search(String productName) throws Exception {
 		List<Warehouse> list = new ArrayList<Warehouse>();

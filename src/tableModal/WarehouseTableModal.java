@@ -10,10 +10,11 @@ import entity.Warehouse;
 public class WarehouseTableModal extends AbstractTableModel {
 
 	private static final int ID_COL = 0;
-	private static final int PRODUCT_COL = 1;
-	private static final int COUNT_COL = 2;
+	private static final int PRODUCT_NAME_COL = 1;
+	private static final int PRODUCT_PRICE_COL = 2;
+	private static final int COUNT_COL = 3;
 
-	private final String[] columnNames = {"Id", "Product", "Count" };
+	private final String[] columnNames = {"Id", "Product", "Price","Count" };
 	private List<Warehouse> list;
 
 	public WarehouseTableModal(List<Warehouse> theProviders) {
@@ -43,8 +44,10 @@ public class WarehouseTableModal extends AbstractTableModel {
 		switch (col) {
 		case ID_COL:
 			return temp.getId();
-		case PRODUCT_COL:
-			return temp.getProduct();
+		case PRODUCT_NAME_COL:
+			return temp.getProduct().getName();
+		case PRODUCT_PRICE_COL:
+			return temp.getProduct().getPrice();
 		case COUNT_COL:
 			return temp.getCount();
 		default:

@@ -16,6 +16,7 @@ import controller.ApplicationController;
 import entity.Delivery;
 import entity.Product;
 import entity.Provider;
+import entity.Warehouse;
 
 public class DeliveryDAO {
 	private Connection myConn;
@@ -83,6 +84,17 @@ public class DeliveryDAO {
 			myStmt.setDate(3, entity.getDate());
 			myStmt.setInt(4, entity.getCount());
 			myStmt.executeUpdate();
+			
+			
+			//past
+			List<Warehouse> readAllByIdProduct = ApplicationController.warehouseController.getDAO().readAllByIdProduct(entity.getProduct().getId());
+			if(readAllByIdProduct.size()>0) {
+				Warehouse warehouse = readAllByIdProduct.get(0);
+				warehouse.setCount(warehouse.getCount()+entity.getCount());
+				ApplicationController.warehouseController.getDAO().update(warehouse);
+			}else {
+				ApplicationController.warehouseController.getDAO().create(new Warehouse(entity.getProduct(), entity.getCount()));
+			}
 		} finally {
 			close(myStmt);
 		}
@@ -109,6 +121,10 @@ public class DeliveryDAO {
 	public void update(Delivery entity) throws Exception {
 		PreparedStatement myStmt = null;
 		try {
+			Delivery past = read(entity.getId()).get(0);
+			Warehouse warehouse= ApplicationController.warehouseController.getDAO().readAllByIdProduct(past.getProduct().getId()).get(0);
+			
+			int countDifference = past.getCount()-entity.getCount();
 			myStmt = myConn
 					.prepareStatement("UPDATE delivery SET id_product=?, id_provider=?, dates=?, count=? WHERE id=?");
 			myStmt.setLong(1, entity.getProduct().getId());
@@ -117,6 +133,19 @@ public class DeliveryDAO {
 			myStmt.setInt(4, entity.getCount());
 			myStmt.setLong(5, entity.getId());
 			myStmt.executeUpdate();
+			//past
+			warehouse.setCount(warehouse.getCount()-past.getCount());
+			ApplicationController.warehouseController.getDAO().update(warehouse);
+			//new
+			List<Warehouse> readAllByIdProduct = ApplicationController.warehouseController.getDAO().readAllByIdProduct(entity.getProduct().getId());
+			if(readAllByIdProduct.size()>0) {
+				Warehouse warehouse2 = readAllByIdProduct.get(0);
+				warehouse2.setCount(warehouse2.getCount()+entity.getCount());
+				ApplicationController.warehouseController.getDAO().update(warehouse2);
+			}else {
+				ApplicationController.warehouseController.getDAO().create(new Warehouse(entity.getProduct(), entity.getCount()));
+			}
+			
 		} finally {
 			close(myStmt);
 		}
@@ -125,9 +154,24 @@ public class DeliveryDAO {
 	public void Delete(Long id) throws Exception {
 		PreparedStatement myStmt = null;
 		try {
+			Delivery delivery=read(id).get(0);
+			
 			myStmt = myConn.prepareStatement("DELETE FROM delivery WHERE id=?");
+			Warehouse warehouse= ApplicationController.warehouseController.getDAO().readAllByIdProduct(delivery.getProduct().getId()).get(0);
+			
+			
+			
+			
 			myStmt.setLong(1, id);
 			myStmt.executeUpdate();
+			if(warehouse.getCount()-delivery.getCount()==0)
+				ApplicationController.warehouseController.getDAO().Delete(warehouse.getId());
+				else {
+					warehouse.setCount(warehouse.getCount()-delivery.getCount());
+					ApplicationController.warehouseController.getDAO().update(warehouse);
+				}
+				
+			
 		} finally {
 			close(myStmt);
 		}
