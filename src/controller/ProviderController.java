@@ -14,12 +14,12 @@ import tableModal.ProviderTableModal;
 
 public class ProviderController extends StandartFrameOperation {
 
-	ProviderDAO providerDAO;
+	ProviderDAO DAO;
 
 	public ProviderController(JFrame frame) {
 		super(frame);
 		try {
-			providerDAO = new ProviderDAO();
+			DAO = new ProviderDAO();
 		} catch (Exception e) {e.printStackTrace();}
 	}
 
@@ -28,9 +28,9 @@ public class ProviderController extends StandartFrameOperation {
 			List<Provider> list = null;
 
 			if (name != null && name.trim().length() > 0)
-				list = providerDAO.search(name);
+				list = DAO.search(name);
 			else
-				list = providerDAO.readAll();
+				list = DAO.readAll();
 
 			ProviderTableModal model = new ProviderTableModal(list);
 			table.setModel(model);
@@ -43,7 +43,7 @@ public class ProviderController extends StandartFrameOperation {
 		if (name.length() > 0 && adres.length() > 0 && phone.length() > 0 && email.length() > 0) {
 			Provider provider = new Provider(name, adres, phone, email);
 			try {
-				providerDAO.create(provider);
+				DAO.create(provider);
 				((ProviderFrame) getFrame()).refreshView();
 				JOptionPane.showMessageDialog(getFrame(), "Успешно добавлено", "Успех", JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception e) {
@@ -57,7 +57,7 @@ public class ProviderController extends StandartFrameOperation {
 			try {
 				Provider provider = new Provider(name, adres, phone, email);
 				provider.setId(id);
-				providerDAO.update(provider);
+				DAO.update(provider);
 				((ProviderFrame) getFrame()).refreshView();
 				JOptionPane.showMessageDialog(getFrame(), "Успешно обновлено", "Успех", JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception e) {
@@ -69,7 +69,7 @@ public class ProviderController extends StandartFrameOperation {
 	public void actionDeleteButton(long id) {
 		if(id>0)
 			try {
-				providerDAO.Delete(id);
+				DAO.Delete(id);
 				((ProviderFrame) getFrame()).refreshView();
 				JOptionPane.showMessageDialog(getFrame(), "Успешно удалено", "Успех", JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception e) {
