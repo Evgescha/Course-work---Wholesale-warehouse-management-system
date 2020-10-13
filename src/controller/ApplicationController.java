@@ -1,23 +1,24 @@
 package controller;
 
-import forms.Client;
-import forms.Employee;
-import forms.Main;
-import forms.Order;
-import forms.Product;
-import forms.Provider;
+import forms.ClientFrame;
+import forms.EmployeeFrame;
+import forms.MainFrame;
+import forms.OrderFrame;
+import forms.ProductFrame;
+import forms.ProviderFrame;
 
 public class ApplicationController {
 	
-	public static MainController mainController = new MainController(new Main());
-	public static ClientController clientController = new ClientController(new Client());
-	public static OrderController orderController = new OrderController(new Order());
-	public static EmployeeController employeeController = new EmployeeController(new Employee());
-	public static ProductController productController = new ProductController(new Product());
-	public static ProviderController providerController = new ProviderController(new Provider());
+	public static MainController mainController = new MainController(new MainFrame());
+	public static ClientController clientController = new ClientController(new ClientFrame());
+	public static OrderController orderController = new OrderController(new OrderFrame());
+	public static EmployeeController employeeController = new EmployeeController(new EmployeeFrame());
+	public static ProductController productController = new ProductController(new ProductFrame());
+	public static ProviderController providerController = new ProviderController(new ProviderFrame());
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		mainController.showFrame();
 	}
+	
 
 }

@@ -5,13 +5,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-public class Provider extends JFrame {
+public class EmployeeFrame extends JFrame {
 
 	private JPanel contentPane;
 
-	
-	public Provider() {
-		setTitle("Поставщик");
+	public EmployeeFrame() {
+		setTitle("Сотрудники");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();

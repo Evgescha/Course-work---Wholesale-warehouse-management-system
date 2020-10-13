@@ -22,4 +22,13 @@ public class StandartFrameOperation {
 	public void switchVisible() {
 		frame.setVisible(!isVisible());
 	}
+
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
+	}
+	
 }

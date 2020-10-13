@@ -9,18 +9,16 @@ import javax.swing.JTable;
 
 import controller.ApplicationController;
 
-public class Main extends JFrame{	
-	
-	private JTable table;
+public class MainFrame extends JFrame{
 
-	public Main() {
+	public MainFrame() {
 		initialize();	
 	}
 
 	private void initialize() {
 		
 		setTitle("Главная");
-		setBounds(100, 100, 480, 219);
+		setBounds(100, 100, 233, 219);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
 
@@ -73,10 +71,6 @@ public class Main extends JFrame{
 		btnNewButton_4.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		btnNewButton_4.setBounds(10, 147, 195, 25);
 		getContentPane().add(btnNewButton_4);
-		
-		table = new JTable();
-		table.setBounds(246, 35, 208, 137);
-		getContentPane().add(table);
 	}
 
 	

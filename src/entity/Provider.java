@@ -41,6 +41,10 @@ public class Provider extends AbstractEntity{
 		this.phone = phone;
 		this.email = email;
 	}
+	@Override
+	public String toString() {
+		return "Provider [id="+id+", name=" + name + ", adres=" + adres + ", phone=" + phone + ", email=" + email + "]";
+	}
 	
 	
 }

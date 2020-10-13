@@ -5,12 +5,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-public class Product extends JFrame {
+public class OrderFrame extends JFrame {
 
 	private JPanel contentPane;
 
-	public Product() {
-		setTitle("Товары");
+	
+	public OrderFrame() {
+		setTitle("Заказы");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
