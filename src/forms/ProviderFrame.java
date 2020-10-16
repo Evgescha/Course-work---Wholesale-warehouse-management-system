@@ -19,7 +19,11 @@ import javax.swing.border.EmptyBorder;
 import controller.ApplicationController;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
+/**
+ * форма отображения поставщиков
+ * @author admin
+ *
+ */
 public class ProviderFrame extends JFrame {
 	private JTable table;
 	private JTextField textField;

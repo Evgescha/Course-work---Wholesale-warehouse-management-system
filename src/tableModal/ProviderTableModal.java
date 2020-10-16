@@ -5,7 +5,11 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 import entity.Provider;
-
+/**
+ * 
+ * @author admin
+ * Модель таблицы поставщика
+ */
 public class ProviderTableModal extends AbstractTableModel {
 
 	private static final int ID_COL = 0;

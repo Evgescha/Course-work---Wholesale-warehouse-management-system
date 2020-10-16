@@ -6,7 +6,11 @@ import javax.swing.table.AbstractTableModel;
 
 import entity.Client;
 import entity.Warehouse;
-
+/**
+ * 
+ * @author admin
+ *Модель таблицы склада
+ */
 public class WarehouseTableModal extends AbstractTableModel {
 
 	private static final int ID_COL = 0;

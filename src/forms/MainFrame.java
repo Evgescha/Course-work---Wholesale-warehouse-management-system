@@ -8,7 +8,11 @@ import javax.swing.JFrame;
 import javax.swing.JTable;
 
 import controller.ApplicationController;
-
+/**
+ * форма главного меню
+ * @author admin
+ *
+ */
 public class MainFrame extends JFrame{
 
 	public MainFrame() {

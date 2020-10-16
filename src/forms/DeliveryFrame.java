@@ -30,7 +30,11 @@ import entity.Delivery;
 import entity.Product;
 import entity.Provider;
 import tableModal.DeliveryTableModal;
-
+/**
+ * форма отображения поставок
+ * @author admin
+ *
+ */
 public class DeliveryFrame extends JFrame {
 	private Long id_product, id_provider;
 	private JTextField textField;

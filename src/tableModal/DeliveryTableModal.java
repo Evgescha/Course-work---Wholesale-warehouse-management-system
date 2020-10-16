@@ -6,7 +6,11 @@ import javax.swing.table.AbstractTableModel;
 
 import entity.Client;
 import entity.Delivery;
-
+/**
+ * модель таблицы поставок
+ * @author admin
+ *
+ */
 public class DeliveryTableModal extends AbstractTableModel {
 
 	public static final int ID_COL = 0;

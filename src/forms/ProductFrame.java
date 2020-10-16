@@ -23,7 +23,11 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
+/**
+ * форма отображения продуктов
+ * @author admin
+ *
+ */
 public class ProductFrame extends JFrame {
 	private JTextField textField;
 	private JTextField textField_1;

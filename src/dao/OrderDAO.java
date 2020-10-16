@@ -136,20 +136,13 @@ public class OrderDAO {
 			myStmt.setInt(5, entity.getCount());
 			myStmt.setLong(6, entity.getId());
 			myStmt.executeUpdate();
-			// past
-//			if (past.getProduct().getId() == entity.getProduct().getId()) {
-				warehouse.setCount(warehouse.getCount() + past.getCount());
-				ApplicationController.warehouseController.getDAO().update(warehouse);
-//			}
-			// new
+			warehouse.setCount(warehouse.getCount() + past.getCount());
+			ApplicationController.warehouseController.getDAO().update(warehouse);
 			List<Warehouse> readAllByIdProduct = ApplicationController.warehouseController.getDAO()
 					.readAllByIdProduct(entity.getProduct().getId());
-//			if (readAllByIdProduct.size() > 0) {
-				Warehouse warehouse2 = readAllByIdProduct.get(0);
-				warehouse2.setCount(warehouse2.getCount() - entity.getCount());
-				ApplicationController.warehouseController.getDAO().update(warehouse2);
-//			}
-//			else {ApplicationController.warehouseController.getDAO().create(new Warehouse(entity.getProduct(),entity.getId()));}
+			Warehouse warehouse2 = readAllByIdProduct.get(0);
+			warehouse2.setCount(warehouse2.getCount() - entity.getCount());
+			ApplicationController.warehouseController.getDAO().update(warehouse2);
 
 		} finally {
 			close(myStmt);

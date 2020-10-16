@@ -6,7 +6,11 @@ import javax.swing.table.AbstractTableModel;
 
 import entity.Order;
 
-
+/**
+ * 
+ * @author admin
+ * модель таблицы заказа
+ */
 public class OrderTableModal extends AbstractTableModel {
 
 	public  static final int ID_COL = 0;

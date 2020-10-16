@@ -6,7 +6,11 @@ import javax.swing.table.AbstractTableModel;
 
 import entity.Employee;
 
-
+/**
+ * 
+ * @author admin
+ * Модель таблицы сотрудника
+ */
 public class EmployeeTableModal extends AbstractTableModel {
 
 	private static final int ID_COL = 0;

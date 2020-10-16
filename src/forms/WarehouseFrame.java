@@ -20,7 +20,11 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 
 import controller.ApplicationController;
-
+/**
+ * форма отображения склада
+ * @author admin
+ *
+ */
 public class WarehouseFrame extends JFrame {
 
 	private JTextField textField;

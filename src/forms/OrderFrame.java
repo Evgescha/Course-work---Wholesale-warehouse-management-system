@@ -33,7 +33,11 @@ import entity.Order;
 import entity.Product;
 import entity.Warehouse;
 import tableModal.OrderTableModal;
-
+/**
+ * форма отображения заказов
+ * @author admin
+ *
+ */
 public class OrderFrame extends JFrame {
 	private Long id_product, id_employee, id_client;
 	private JTextField textField;

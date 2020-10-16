@@ -1,7 +1,11 @@
 package defaultOperation;
 
 import javax.swing.JFrame;
-
+/**
+ * класс, содержащий стандартные операции для всех форм
+ * @author admin
+ *
+ */
 public class StandartFrameOperation {
 	JFrame frame;
 
